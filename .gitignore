@@ -1,0 +1,41 @@
+# generic
+build/**
+compile_commands.json
+
+# osx
+.DS_Store
+profile
+
+# emacs
+*~
+
+# visual studio
+*.user
+*.sdf
+*ipch
+*.userprefs
+.vs/**
+**/out/**
+CMakeSettings.json
+
+# KDE Dolphin (file manager)
+.directory
+
+# CLion IDE
+.idea
+
+# KDevelop
+.kdev4
+*.kdev4
+
+# Kate
+*.kate-swp
+
+# Patch
+*.rej
+*.orig
+
+# Eclipse
+.classpath
+.project
+.settings
