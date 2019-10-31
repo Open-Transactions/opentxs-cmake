@@ -26,11 +26,17 @@ macro(set_compiler_flags cxxStandard pedanticMode)
       "${${PROJECT_NAME}_WARNING_FLAGS} -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-covered-switch-default -Wno-exit-time-destructors -Wno-global-constructors -Wno-missing-prototypes -Wno-missing-variable-declarations -Wno-padded -Wno-undefined-func-template -Wno-unknown-warning-option -Wno-weak-template-vtables -Wno-weak-vtables"
     )
   elseif(MSVC)
-    set(${PROJECT_NAME}_WARNING_FLAGS "${${PROJECT_NAME}_WARNING_FLAGS} /wd4068 /wd4250")
+    set(
+      ${PROJECT_NAME}_WARNING_FLAGS
+      "${${PROJECT_NAME}_WARNING_FLAGS} /wd4068 /wd4250"
+    )
   endif()
 
   if(NOT MSVC)
-    set(${PROJECT_NAME}_WARNING_FLAGS "${${PROJECT_NAME}_WARNING_FLAGS} -Wno-pragmas -Wno-unknown-pragmas")
+    set(
+      ${PROJECT_NAME}_WARNING_FLAGS
+      "${${PROJECT_NAME}_WARNING_FLAGS} -Wno-pragmas -Wno-unknown-pragmas"
+    )
   endif()
 
   if(${pedanticMode})

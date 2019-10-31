@@ -9,11 +9,8 @@ macro(set_common_defines)
       add_definitions(-DIDC_STATIC=-1)
     endif()
 
-    add_definitions("-DEXPORT=__declspec(dllexport)")
     add_definitions(-DNOMINMAX)
     add_definitions(-D_UNICODE)
-  else()
-    add_definitions(-DEXPORT=)
   endif()
 
   if(ANDROID)
