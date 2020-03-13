@@ -6,7 +6,7 @@
 function(print_build_details buildPedantic enableTests)
   message(STATUS "General -------------------------------------")
   message(STATUS "Project name:           ${PROJECT_NAME}")
-  message(STATUS "Project version:        ${VERSION_STRING}")
+  message(STATUS "Project version:        ${${PROJECT_NAME}_VERSION_STRING}")
   message(STATUS "CMake version:          ${CMAKE_VERSION}")
   message(STATUS "Build type:             ${CMAKE_BUILD_TYPE}")
   message(STATUS "System:                 ${CMAKE_SYSTEM}")

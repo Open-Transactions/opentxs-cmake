@@ -5,7 +5,7 @@ includedir=${prefix}/include
 
 Name: @CMAKE_PROJECT_NAME@
 Description: @CPACK_PACKAGE_DESCRIPTION@
-Version: @VERSION_STRING@
+Version: @@PROJECT_NAME@_VERSION_STRING@
 
 Libs: -L${libdir} @linkString@
 Libs.private: @PRIVATE_LIBS@

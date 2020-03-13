@@ -40,7 +40,7 @@ function(generate_cmake_files)
 
   write_basic_package_version_file(
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-    VERSION ${VERSION_STRING}
+    VERSION ${${PROJECT_NAME}_VERSION_STRING}
     COMPATIBILITY AnyNewerVersion
   )
 
