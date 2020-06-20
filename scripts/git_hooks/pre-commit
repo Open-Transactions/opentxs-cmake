@@ -3,15 +3,15 @@
 clang_bin=clang-format
 
 if ! command -v clang-format >/dev/null ; then
-    echo -n "error: please install clang-format >= 8.* to use"
+    echo -n "error: please install clang-format >= 10.* to use"
     echo    " this pre-commit git-hook"
     exit 1
 fi
 
-version=$(clang-format  --version | sed 's/clang-format version //' | head -c 1)
+version=$(clang-format  --version | sed 's/clang-format version //' | head -c 2)
 
-if (($version < 8)) ; then
-    echo "Checking for clang-format version >= 8.* ... failed"
+if (($version < 10)) ; then
+    echo "Checking for clang-format version >= 10.* ... failed"
     exit 1
 fi
 
