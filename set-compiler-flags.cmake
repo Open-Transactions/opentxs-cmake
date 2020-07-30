@@ -28,7 +28,7 @@ macro(set_compiler_flags cxxStandard pedanticMode)
   elseif(MSVC)
     set(
       ${PROJECT_NAME}_WARNING_FLAGS
-      "${${PROJECT_NAME}_WARNING_FLAGS} /wd4068 /wd4250"
+      "${${PROJECT_NAME}_WARNING_FLAGS} /W3 /wd4068 /wd4250"
     )
   endif()
 
@@ -41,7 +41,10 @@ macro(set_compiler_flags cxxStandard pedanticMode)
 
   if(${pedanticMode})
     if(MSVC)
-      set(${PROJECT_NAME}_PEDANTIC_FLAG "") # TODO
+      set(${PROJECT_NAME}_PEDANTIC_FLAG "/WX")
+      set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /WX")
+      set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /WX")
+      set(CMAKE_STATIC_LINKER_FLAGS "${CMAKE_STATIC_LINKER_FLAGS} /WX")
     else()
       set(${PROJECT_NAME}_PEDANTIC_FLAG "-Werror -pedantic-errors")
     endif()
