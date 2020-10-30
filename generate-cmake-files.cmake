@@ -9,14 +9,12 @@ function(generate_cmake_files)
   set(${PROJECT_NAME}_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include")
 
   if(BUILD_SHARED_LIBS)
-    set(
-      ${PROJECT_NAME}_LIBRARIES
-      "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}"
+    set(${PROJECT_NAME}_LIBRARIES
+        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}"
     )
   else()
-    set(
-      ${PROJECT_NAME}_LIBRARIES
-      "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${CMAKE_STATIC_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_STATIC_LIBRARY_SUFFIX}"
+    set(${PROJECT_NAME}_LIBRARIES
+        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${CMAKE_STATIC_LIBRARY_PREFIX}${PROJECT_NAME}${CMAKE_STATIC_LIBRARY_SUFFIX}"
     )
   endif()
 
@@ -24,18 +22,16 @@ function(generate_cmake_files)
   set(INCLUDE_DIRS_STRING "@PACKAGE_${PROJECT_NAME}_INCLUDE_DIRS@")
   set(LIBRARIES_STRING "@PACKAGE_${PROJECT_NAME}_LIBRARIES@")
 
-  configure_file("${${PROJECT_NAME}_SOURCE_DIR}/cmake/projectConfig.cmake.in"
-                 "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake.in"
-                 @ONLY)
+  configure_file(
+    "${${PROJECT_NAME}_SOURCE_DIR}/cmake/projectConfig.cmake.in"
+    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake.in" @ONLY
+  )
 
   configure_package_config_file(
     "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake.in"
     "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-    INSTALL_DESTINATION
-    ${CMAKE_CONFIG_DEST}
-    PATH_VARS
-    ${PROJECT_NAME}_INCLUDE_DIRS
-    ${PROJECT_NAME}_LIBRARIES
+    INSTALL_DESTINATION ${CMAKE_CONFIG_DEST}
+    PATH_VARS ${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_NAME}_LIBRARIES
   )
 
   write_basic_package_version_file(
@@ -45,9 +41,8 @@ function(generate_cmake_files)
   )
 
   install(
-    FILES
-      "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-      "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+    FILES "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+          "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
     DESTINATION ${CMAKE_CONFIG_DEST}
     COMPONENT dev
   )

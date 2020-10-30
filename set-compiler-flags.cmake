@@ -16,26 +16,22 @@ macro(set_compiler_flags cxxStandard pedanticMode)
   endif()
 
   if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
-    set(
-      ${PROJECT_NAME}_WARNING_FLAGS
-      "${${PROJECT_NAME}_WARNING_FLAGS} -Wcast-align -Wctor-dtor-privacy -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Weffc++ -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Wnull-dereference -Wold-style-cast -Woverloaded-virtual -Wrestrict -Wshadow -Wstrict-null-sentinel -Wswitch-default -Wswitch-enum -Wundef -Wunused-macros"
+    set(${PROJECT_NAME}_WARNING_FLAGS
+        "${${PROJECT_NAME}_WARNING_FLAGS} -Wcast-align -Wctor-dtor-privacy -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Weffc++ -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Wnull-dereference -Wold-style-cast -Woverloaded-virtual -Wrestrict -Wshadow -Wstrict-null-sentinel -Wswitch-default -Wswitch-enum -Wundef -Wunused-macros"
     )
   elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
-    set(
-      ${PROJECT_NAME}_WARNING_FLAGS
-      "${${PROJECT_NAME}_WARNING_FLAGS} -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-covered-switch-default -Wno-exit-time-destructors -Wno-global-constructors -Wno-missing-prototypes -Wno-missing-variable-declarations -Wno-padded -Wno-undefined-func-template -Wno-unknown-warning-option -Wno-weak-template-vtables -Wno-weak-vtables"
+    set(${PROJECT_NAME}_WARNING_FLAGS
+        "${${PROJECT_NAME}_WARNING_FLAGS} -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-covered-switch-default -Wno-exit-time-destructors -Wno-global-constructors -Wno-missing-prototypes -Wno-missing-variable-declarations -Wno-padded -Wno-undefined-func-template -Wno-unknown-warning-option -Wno-weak-template-vtables -Wno-weak-vtables"
     )
   elseif(MSVC)
-    set(
-      ${PROJECT_NAME}_WARNING_FLAGS
-      "${${PROJECT_NAME}_WARNING_FLAGS} /W3 /wd4068 /wd4250"
+    set(${PROJECT_NAME}_WARNING_FLAGS
+        "${${PROJECT_NAME}_WARNING_FLAGS} /W3 /wd4068 /wd4250"
     )
   endif()
 
   if(NOT MSVC)
-    set(
-      ${PROJECT_NAME}_WARNING_FLAGS
-      "${${PROJECT_NAME}_WARNING_FLAGS} -Wno-pragmas -Wno-unknown-pragmas"
+    set(${PROJECT_NAME}_WARNING_FLAGS
+        "${${PROJECT_NAME}_WARNING_FLAGS} -Wno-pragmas -Wno-unknown-pragmas"
     )
   endif()
 
@@ -52,8 +48,7 @@ macro(set_compiler_flags cxxStandard pedanticMode)
     set(${PROJECT_NAME}_PEDANTIC_FLAG "")
   endif()
 
-  set(
-    CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} ${${PROJECT_NAME}_PEDANTIC_FLAG} ${${PROJECT_NAME}_WARNING_FLAGS}"
+  set(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} ${${PROJECT_NAME}_PEDANTIC_FLAG} ${${PROJECT_NAME}_WARNING_FLAGS}"
   )
 endmacro()

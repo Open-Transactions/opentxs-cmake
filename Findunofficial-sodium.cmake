@@ -41,14 +41,21 @@ The following cache variables may also be set:
 
 #]=======================================================================]
 
-find_package(PkgConfig)
-pkg_check_modules(PC_Sodium QUIET "libsodium")
+find_package(PkgConfig QUIET)
 
-if(NOT PC_Sodium_FOUND)
-  pkg_check_modules(PC_Sodium QUIET "sodium")
-endif(NOT PC_Sodium_FOUND)
+if(PkgConfig_FOUND)
+  pkg_check_modules(PC_Sodium QUIET "libsodium")
 
-find_path(SODIUM_INCLUDE_DIR NAMES sodium.h PATHS ${PC_Sodium_INCLUDE_DIRS})
+  if(NOT PC_Sodium_FOUND)
+    pkg_check_modules(PC_Sodium QUIET "sodium")
+  endif(NOT PC_Sodium_FOUND)
+endif()
+
+find_path(
+  SODIUM_INCLUDE_DIR
+  NAMES sodium.h
+  PATHS ${PC_Sodium_INCLUDE_DIRS}
+)
 find_library(
   SODIUM_LIBRARY
   NAMES libsodium sodium
@@ -60,13 +67,9 @@ set(SODIUM_VERSION ${PC_Sodium_VERSION})
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
   ${CMAKE_FIND_PACKAGE_NAME}
-  FOUND_VAR
-  UNOFFICIAL-SODIUM_FOUND
-  REQUIRED_VARS
-  SODIUM_LIBRARY
-  SODIUM_INCLUDE_DIR
-  VERSION_VAR
-  SODIUM_VERSION
+  FOUND_VAR UNOFFICIAL-SODIUM_FOUND
+  REQUIRED_VARS SODIUM_LIBRARY SODIUM_INCLUDE_DIR
+  VERSION_VAR SODIUM_VERSION
 )
 
 if(UNOFFICIAL-SODIUM_FOUND)
@@ -80,12 +83,9 @@ if(UNOFFICIAL-SODIUM_FOUND AND NOT TARGET unofficial-sodium::sodium)
   set_target_properties(
     unofficial-sodium::sodium
     PROPERTIES
-      IMPORTED_LOCATION
-      "${SODIUM_LIBRARY}"
-      INTERFACE_COMPILE_OPTIONS
-      "${PC_Sodium_CFLAGS_OTHER}"
-      INTERFACE_INCLUDE_DIRECTORIES
-      "${SODIUM_INCLUDE_DIR}"
+      IMPORTED_LOCATION "${SODIUM_LIBRARY}"
+      INTERFACE_COMPILE_OPTIONS "${PC_Sodium_CFLAGS_OTHER}"
+      INTERFACE_INCLUDE_DIRECTORIES "${SODIUM_INCLUDE_DIR}"
   )
 endif()
 

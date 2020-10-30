@@ -13,10 +13,14 @@ function(generate_pkgconfig linkString)
       "${CMAKE_INSTALL_LIBDIR}"
   )
 
-  configure_file("${${PROJECT_NAME}_SOURCE_DIR}/cmake/project.pc.in"
-                 "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc.in" @ONLY)
-  configure_file("${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc.in"
-                 "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc" @ONLY)
+  configure_file(
+    "${${PROJECT_NAME}_SOURCE_DIR}/cmake/project.pc.in"
+    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc.in" @ONLY
+  )
+  configure_file(
+    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc.in"
+    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc" @ONLY
+  )
 
   install(
     FILES "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc"

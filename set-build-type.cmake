@@ -5,13 +5,12 @@
 
 macro(set_build_type)
   if(CMAKE_BUILD_TYPE STREQUAL "")
-    set(
-      CMAKE_BUILD_TYPE
-      Release
-      CACHE
-        STRING
-        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
-        FORCE
+    set(CMAKE_BUILD_TYPE
+        Release
+        CACHE
+          STRING
+          "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+          FORCE
     )
   endif()
 endmacro()

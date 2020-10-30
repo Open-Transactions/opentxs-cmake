@@ -41,28 +41,35 @@ The following cache variables may also be set:
 
 #]=======================================================================]
 
-find_package(PkgConfig)
-pkg_check_modules(PC_ZeroMQ QUIET "libzmq")
+find_package(PkgConfig QUIET)
 
-if(NOT PC_ZeroMQ_FOUND)
-  pkg_check_modules(PC_ZeroMQ QUIET "zmq")
-endif(NOT PC_ZeroMQ_FOUND)
+if(PkgConfig_FOUND)
+  pkg_check_modules(PC_ZeroMQ QUIET "libzmq")
 
-find_path(ZMQ_INCLUDE_DIR NAMES zmq.h PATHS ${PC_ZeroMQ_INCLUDE_DIRS})
-find_library(ZMQ_LIBRARY NAMES libzmq zmq PATHS ${PC_ZeroMQ_LIBRARY_DIRS})
+  if(NOT PC_ZeroMQ_FOUND)
+    pkg_check_modules(PC_ZeroMQ QUIET "zmq")
+  endif(NOT PC_ZeroMQ_FOUND)
+endif()
+
+find_path(
+  ZMQ_INCLUDE_DIR
+  NAMES zmq.h
+  PATHS ${PC_ZeroMQ_INCLUDE_DIRS}
+)
+find_library(
+  ZMQ_LIBRARY
+  NAMES libzmq zmq
+  PATHS ${PC_ZeroMQ_LIBRARY_DIRS}
+)
 
 set(ZMQ_VERSION ${PC_ZeroMQ_VERSION})
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
   ${CMAKE_FIND_PACKAGE_NAME}
-  FOUND_VAR
-  UNOFFICIAL-ZEROMQ_FOUND
-  REQUIRED_VARS
-  ZMQ_LIBRARY
-  ZMQ_INCLUDE_DIR
-  VERSION_VAR
-  ZMQ_VERSION
+  FOUND_VAR UNOFFICIAL-ZEROMQ_FOUND
+  REQUIRED_VARS ZMQ_LIBRARY ZMQ_INCLUDE_DIR
+  VERSION_VAR ZMQ_VERSION
 )
 
 if(UNOFFICIAL-ZEROMQ_FOUND)
@@ -76,12 +83,9 @@ if(UNOFFICIAL-ZEROMQ_FOUND AND NOT TARGET libzmq)
   set_target_properties(
     libzmq
     PROPERTIES
-      IMPORTED_LOCATION
-      "${ZMQ_LIBRARY}"
-      INTERFACE_COMPILE_OPTIONS
-      "${PC_ZeroMQ_CFLAGS_OTHER}"
-      INTERFACE_INCLUDE_DIRECTORIES
-      "${ZMQ_INCLUDE_DIR}"
+      IMPORTED_LOCATION "${ZMQ_LIBRARY}"
+      INTERFACE_COMPILE_OPTIONS "${PC_ZeroMQ_CFLAGS_OTHER}"
+      INTERFACE_INCLUDE_DIRECTORIES "${ZMQ_INCLUDE_DIR}"
   )
 endif()
 

@@ -41,12 +41,15 @@ The following cache variables may also be set:
 
 #]=======================================================================]
 
-find_package(PkgConfig)
-pkg_check_modules(PC_secp256k1 QUIET "libsecp256k1")
+find_package(PkgConfig QUIET)
 
-if(NOT PC_SECP256K1_FOUND)
-  pkg_check_modules(PC_secp256k1 QUIET "secp256k1")
-endif(NOT PC_SECP256K1_FOUND)
+if(PkgConfig_FOUND)
+  pkg_check_modules(PC_secp256k1 QUIET "libsecp256k1")
+
+  if(NOT PC_SECP256K1_FOUND)
+    pkg_check_modules(PC_secp256k1 QUIET "secp256k1")
+  endif(NOT PC_SECP256K1_FOUND)
+endif()
 
 find_path(
   SECP256K1_INCLUDE_DIR
@@ -64,13 +67,9 @@ set(SECP256K1_VERSION ${PC_secp256k1_VERSION})
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
   ${CMAKE_FIND_PACKAGE_NAME}
-  FOUND_VAR
-  UNOFFICIAL-SECP256K1_FOUND
-  REQUIRED_VARS
-  SECP256K1_LIBRARY
-  SECP256K1_INCLUDE_DIR
-  VERSION_VAR
-  SECP256K1_VERSION
+  FOUND_VAR UNOFFICIAL-SECP256K1_FOUND
+  REQUIRED_VARS SECP256K1_LIBRARY SECP256K1_INCLUDE_DIR
+  VERSION_VAR SECP256K1_VERSION
 )
 
 if(UNOFFICIAL-SECP256K1_FOUND)
@@ -84,12 +83,9 @@ if(UNOFFICIAL-SECP256K1_FOUND AND NOT TARGET unofficial::secp256k1)
   set_target_properties(
     unofficial::secp256k1
     PROPERTIES
-      IMPORTED_LOCATION
-      "${SECP256K1_LIBRARY}"
-      INTERFACE_COMPILE_OPTIONS
-      "${PC_secp256k1_CFLAGS_OTHER}"
-      INTERFACE_INCLUDE_DIRECTORIES
-      "${SECP256K1_INCLUDE_DIR}"
+      IMPORTED_LOCATION "${SECP256K1_LIBRARY}"
+      INTERFACE_COMPILE_OPTIONS "${PC_secp256k1_CFLAGS_OTHER}"
+      INTERFACE_INCLUDE_DIRECTORIES "${SECP256K1_INCLUDE_DIR}"
   )
 endif()
 

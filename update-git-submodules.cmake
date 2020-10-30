@@ -11,12 +11,7 @@ macro(update_git_submodules)
   endif()
 
   execute_process(
-    COMMAND
-      ${GIT}
-      "submodule"
-      "update"
-      "--init"
-      "--recursive"
+    COMMAND ${GIT} "submodule" "update" "--init" "--recursive"
     WORKING_DIRECTORY ${${PROJECT_NAME}_SOURCE_DIR}
   )
 endmacro()

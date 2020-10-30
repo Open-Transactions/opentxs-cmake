@@ -41,28 +41,35 @@ The following cache variables may also be set:
 
 #]=======================================================================]
 
-find_package(PkgConfig)
-pkg_check_modules(PC_lmdb QUIET "liblmdb")
+find_package(PkgConfig QUIET)
 
-if(NOT PC_LMDB_FOUND)
-  pkg_check_modules(PC_lmdb QUIET "lmdb")
-endif(NOT PC_LMDB_FOUND)
+if(PkgConfig_FOUND)
+  pkg_check_modules(PC_lmdb QUIET "liblmdb")
 
-find_path(LMDB_INCLUDE_DIR NAMES lmdb.h PATHS ${PC_lmdb_INCLUDE_DIRS})
-find_library(LMDB_LIBRARY NAMES liblmdb lmdb PATHS ${PC_lmdb_LIBRARY_DIRS})
+  if(NOT PC_LMDB_FOUND)
+    pkg_check_modules(PC_lmdb QUIET "lmdb")
+  endif(NOT PC_LMDB_FOUND)
+endif()
+
+find_path(
+  LMDB_INCLUDE_DIR
+  NAMES lmdb.h
+  PATHS ${PC_lmdb_INCLUDE_DIRS}
+)
+find_library(
+  LMDB_LIBRARY
+  NAMES liblmdb lmdb
+  PATHS ${PC_lmdb_LIBRARY_DIRS}
+)
 
 set(LMDB_VERSION ${PC_lmdb_VERSION})
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
   ${CMAKE_FIND_PACKAGE_NAME}
-  FOUND_VAR
-  LMDB_FOUND
-  REQUIRED_VARS
-  LMDB_LIBRARY
-  LMDB_INCLUDE_DIR
-  VERSION_VAR
-  LMDB_VERSION
+  FOUND_VAR LMDB_FOUND
+  REQUIRED_VARS LMDB_LIBRARY LMDB_INCLUDE_DIR
+  VERSION_VAR LMDB_VERSION
 )
 
 if(LMDB_FOUND)
@@ -76,12 +83,9 @@ if(LMDB_FOUND AND NOT TARGET lmdb)
   set_target_properties(
     lmdb
     PROPERTIES
-      IMPORTED_LOCATION
-      "${LMDB_LIBRARY}"
-      INTERFACE_COMPILE_OPTIONS
-      "${PC_lmdb_CFLAGS_OTHER}"
-      INTERFACE_INCLUDE_DIRECTORIES
-      "${LMDB_INCLUDE_DIR}"
+      IMPORTED_LOCATION "${LMDB_LIBRARY}"
+      INTERFACE_COMPILE_OPTIONS "${PC_lmdb_CFLAGS_OTHER}"
+      INTERFACE_INCLUDE_DIRECTORIES "${LMDB_INCLUDE_DIR}"
   )
 endif()
 

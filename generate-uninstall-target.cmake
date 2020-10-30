@@ -12,7 +12,7 @@ macro(generate_uninstall_target)
   )
 
   add_custom_target(
-    uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${${PROJECT_NAME}_BINARY_DIR}/uninstall.cmake
+    uninstall COMMAND ${CMAKE_COMMAND} -P
+                      ${${PROJECT_NAME}_BINARY_DIR}/uninstall.cmake
   )
 endmacro()
