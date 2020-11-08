@@ -4,7 +4,6 @@ compile_commands.json
 
 # osx
 .DS_Store
-profile
 
 # emacs
 *~
