@@ -10,6 +10,78 @@ macro(set_compiler_flags cxxStandard pedanticMode)
   set(CMAKE_CXX_EXTENSIONS OFF)
 
   if(MSVC)
+    if("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "")
+      if("${VCPKG_TARGET_TRIPLET}" STREQUAL "x64-windows")
+        if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+          set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebugDLL")
+        else()
+          set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
+        endif()
+      elseif("${VCPKG_TARGET_TRIPLET}" STREQUAL "x64-windows-static")
+        if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+          set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
+        else()
+          set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
+        endif()
+      elseif("${VCPKG_TARGET_TRIPLET}" STREQUAL "x64-windows-static-md")
+        if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+          set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebugDLL")
+        else()
+          set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
+        endif()
+      endif()
+    endif()
+
+    if("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "MultiThreaded")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MT")
+      set(CMAKE_SHARED_LINKER_FLAGS
+          "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
+      )
+      set(CMAKE_STATIC_LINKER_FLAGS
+          "${CMAKE_STATIC_LINKER_FLAGS} /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
+      )
+      set(CMAKE_EXE_LINKER_FLAGS
+          "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
+      )
+    elseif("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "MultiThreadedDLL")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MD")
+      set(CMAKE_SHARED_LINKER_FLAGS
+          "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
+      )
+      set(CMAKE_STATIC_LINKER_FLAGS
+          "${CMAKE_STATIC_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
+      )
+      set(CMAKE_EXE_LINKER_FLAGS
+          "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
+      )
+    elseif("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "MultiThreadedDebug")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MTd")
+      set(CMAKE_SHARED_LINKER_FLAGS
+          "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcrtd.lib"
+      )
+      set(CMAKE_STATIC_LINKER_FLAGS
+          "${CMAKE_STATIC_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcrtd.lib"
+      )
+      set(CMAKE_EXE_LINKER_FLAGS
+          "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcrtd.lib"
+      )
+    elseif("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "MultiThreadedDebugDLL")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MDd")
+      set(CMAKE_SHARED_LINKER_FLAGS
+          "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib"
+      )
+      set(CMAKE_STATIC_LINKER_FLAGS
+          "${CMAKE_STATIC_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib"
+      )
+      set(CMAKE_EXE_LINKER_FLAGS
+          "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib"
+      )
+    else()
+      message(FATAL_ERROR "Setting CMAKE_MSVC_RUNTIME_LIBRARY is required")
+    endif()
+  endif()
+
+  if(MSVC)
     set(${PROJECT_NAME}_WARNING_FLAGS "/bigobj")
   else()
     set(${PROJECT_NAME}_WARNING_FLAGS "-W -Wall -Wextra -pedantic")
