@@ -9,7 +9,7 @@ line_width = 80
 tab_size = 2
 
 # If arglists are longer than this, break them always
-max_pargs_hwrap = 3
+max_pargs_hwrap = 2
 
 # If true, separate flow control names from their parentheses with a space
 separate_ctrl_name_with_space = False
