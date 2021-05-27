@@ -39,3 +39,6 @@ CMakeSettings.json
 .classpath
 .project
 .settings
+.cproject
+.externalToolBuilders
+
