@@ -42,3 +42,6 @@ CMakeSettings.json
 .cproject
 .externalToolBuilders
 
+# Linux
+
+.nfs*
