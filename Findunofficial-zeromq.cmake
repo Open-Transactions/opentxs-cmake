@@ -44,10 +44,18 @@ The following cache variables may also be set:
 find_package(PkgConfig QUIET)
 
 if(PkgConfig_FOUND)
-  pkg_check_modules(PC_ZeroMQ QUIET "libzmq")
+  pkg_check_modules(
+    PC_ZeroMQ
+    QUIET
+    "libzmq"
+  )
 
   if(NOT PC_ZeroMQ_FOUND)
-    pkg_check_modules(PC_ZeroMQ QUIET "zmq")
+    pkg_check_modules(
+      PC_ZeroMQ
+      QUIET
+      "zmq"
+    )
   endif(NOT PC_ZeroMQ_FOUND)
 endif()
 
@@ -78,8 +86,16 @@ if(UNOFFICIAL-ZEROMQ_FOUND)
   set(ZMQ_DEFINITIONS ${PC_ZeroMQ_CFLAGS_OTHER})
 endif()
 
-if(UNOFFICIAL-ZEROMQ_FOUND AND NOT TARGET libzmq)
-  add_library(libzmq UNKNOWN IMPORTED)
+if(UNOFFICIAL-ZEROMQ_FOUND
+   AND NOT
+       TARGET
+       libzmq
+)
+  add_library(
+    libzmq
+    UNKNOWN
+    IMPORTED
+  )
   set_target_properties(
     libzmq
     PROPERTIES

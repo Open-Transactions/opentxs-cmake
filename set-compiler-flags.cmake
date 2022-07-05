@@ -3,28 +3,55 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-macro(set_compiler_flags cxxStandard pedanticMode)
+macro(
+  set_compiler_flags
+  cxxStandard
+  pedanticMode
+)
 
   set(CMAKE_CXX_STANDARD ${cxxStandard})
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
   set(CMAKE_CXX_EXTENSIONS OFF)
 
   if(MSVC)
-    if("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "")
-      if("${VCPKG_TARGET_TRIPLET}" STREQUAL "x64-windows")
-        if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    if("${CMAKE_MSVC_RUNTIME_LIBRARY}"
+       STREQUAL
+       ""
+    )
+      if("${VCPKG_TARGET_TRIPLET}"
+         STREQUAL
+         "x64-windows"
+      )
+        if("${CMAKE_BUILD_TYPE}"
+           STREQUAL
+           "Debug"
+        )
           set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebugDLL")
         else()
           set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
         endif()
-      elseif("${VCPKG_TARGET_TRIPLET}" STREQUAL "x64-windows-static")
-        if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+      elseif(
+        "${VCPKG_TARGET_TRIPLET}"
+        STREQUAL
+        "x64-windows-static"
+      )
+        if("${CMAKE_BUILD_TYPE}"
+           STREQUAL
+           "Debug"
+        )
           set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
         else()
           set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
         endif()
-      elseif("${VCPKG_TARGET_TRIPLET}" STREQUAL "x64-windows-static-md")
-        if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+      elseif(
+        "${VCPKG_TARGET_TRIPLET}"
+        STREQUAL
+        "x64-windows-static-md"
+      )
+        if("${CMAKE_BUILD_TYPE}"
+           STREQUAL
+           "Debug"
+        )
           set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebugDLL")
         else()
           set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
@@ -32,7 +59,10 @@ macro(set_compiler_flags cxxStandard pedanticMode)
       endif()
     endif()
 
-    if("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "MultiThreaded")
+    if("${CMAKE_MSVC_RUNTIME_LIBRARY}"
+       STREQUAL
+       "MultiThreaded"
+    )
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MT")
       set(CMAKE_SHARED_LINKER_FLAGS
           "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
@@ -43,7 +73,11 @@ macro(set_compiler_flags cxxStandard pedanticMode)
       set(CMAKE_EXE_LINKER_FLAGS
           "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
       )
-    elseif("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "MultiThreadedDLL")
+    elseif(
+      "${CMAKE_MSVC_RUNTIME_LIBRARY}"
+      STREQUAL
+      "MultiThreadedDLL"
+    )
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MD")
       set(CMAKE_SHARED_LINKER_FLAGS
           "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
@@ -54,7 +88,11 @@ macro(set_compiler_flags cxxStandard pedanticMode)
       set(CMAKE_EXE_LINKER_FLAGS
           "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
       )
-    elseif("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "MultiThreadedDebug")
+    elseif(
+      "${CMAKE_MSVC_RUNTIME_LIBRARY}"
+      STREQUAL
+      "MultiThreadedDebug"
+    )
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MTd")
       set(CMAKE_SHARED_LINKER_FLAGS
           "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcrtd.lib"
@@ -65,7 +103,11 @@ macro(set_compiler_flags cxxStandard pedanticMode)
       set(CMAKE_EXE_LINKER_FLAGS
           "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcrtd.lib"
       )
-    elseif("${CMAKE_MSVC_RUNTIME_LIBRARY}" STREQUAL "MultiThreadedDebugDLL")
+    elseif(
+      "${CMAKE_MSVC_RUNTIME_LIBRARY}"
+      STREQUAL
+      "MultiThreadedDebugDLL"
+    )
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MDd")
       set(CMAKE_SHARED_LINKER_FLAGS
           "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib"
@@ -87,11 +129,18 @@ macro(set_compiler_flags cxxStandard pedanticMode)
     set(${PROJECT_NAME}_WARNING_FLAGS "-W -Wall -Wextra -pedantic")
   endif()
 
-  if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
+  if(${CMAKE_CXX_COMPILER_ID}
+     MATCHES
+     GNU
+  )
     set(${PROJECT_NAME}_WARNING_FLAGS
         "${${PROJECT_NAME}_WARNING_FLAGS} -Wcast-align -Wctor-dtor-privacy -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Weffc++ -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Wnull-dereference -Wold-style-cast -Woverloaded-virtual -Wrestrict -Wshadow -Wstrict-null-sentinel -Wswitch-default -Wswitch-enum -Wundef -Wunused-macros"
     )
-  elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
+  elseif(
+    ${CMAKE_CXX_COMPILER_ID}
+    MATCHES
+    Clang
+  )
     set(${PROJECT_NAME}_WARNING_FLAGS
         "${${PROJECT_NAME}_WARNING_FLAGS} -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-covered-switch-default -Wno-exit-time-destructors -Wno-global-constructors -Wno-missing-prototypes -Wno-missing-variable-declarations -Wno-padded -Wno-undefined-func-template -Wno-unknown-warning-option -Wno-weak-template-vtables -Wno-weak-vtables"
     )

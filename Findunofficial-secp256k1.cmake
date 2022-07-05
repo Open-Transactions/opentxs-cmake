@@ -44,10 +44,18 @@ The following cache variables may also be set:
 find_package(PkgConfig QUIET)
 
 if(PkgConfig_FOUND)
-  pkg_check_modules(PC_secp256k1 QUIET "libsecp256k1")
+  pkg_check_modules(
+    PC_secp256k1
+    QUIET
+    "libsecp256k1"
+  )
 
   if(NOT PC_SECP256K1_FOUND)
-    pkg_check_modules(PC_secp256k1 QUIET "secp256k1")
+    pkg_check_modules(
+      PC_secp256k1
+      QUIET
+      "secp256k1"
+    )
   endif(NOT PC_SECP256K1_FOUND)
 endif()
 
@@ -78,8 +86,16 @@ if(UNOFFICIAL-SECP256K1_FOUND)
   set(SECP256K1_DEFINITIONS ${PC_secp256k1_CFLAGS_OTHER})
 endif()
 
-if(UNOFFICIAL-SECP256K1_FOUND AND NOT TARGET unofficial::secp256k1)
-  add_library(unofficial::secp256k1 UNKNOWN IMPORTED)
+if(UNOFFICIAL-SECP256K1_FOUND
+   AND NOT
+       TARGET
+       unofficial::secp256k1
+)
+  add_library(
+    unofficial::secp256k1
+    UNKNOWN
+    IMPORTED
+  )
   set_target_properties(
     unofficial::secp256k1
     PROPERTIES

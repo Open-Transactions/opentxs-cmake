@@ -24,7 +24,8 @@ function(generate_cmake_files)
 
   configure_file(
     "${${PROJECT_NAME}_SOURCE_DIR}/cmake/projectConfig.cmake.in"
-    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake.in" @ONLY
+    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake.in"
+    @ONLY
   )
 
   configure_package_config_file(

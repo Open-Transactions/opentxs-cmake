@@ -44,10 +44,18 @@ The following cache variables may also be set:
 find_package(PkgConfig QUIET)
 
 if(PkgConfig_FOUND)
-  pkg_check_modules(PC_lmdb QUIET "liblmdb")
+  pkg_check_modules(
+    PC_lmdb
+    QUIET
+    "liblmdb"
+  )
 
   if(NOT PC_LMDB_FOUND)
-    pkg_check_modules(PC_lmdb QUIET "lmdb")
+    pkg_check_modules(
+      PC_lmdb
+      QUIET
+      "lmdb"
+    )
   endif(NOT PC_LMDB_FOUND)
 endif()
 
@@ -78,8 +86,16 @@ if(LMDB_FOUND)
   set(LMDB_DEFINITIONS ${PC_lmdb_CFLAGS_OTHER})
 endif()
 
-if(LMDB_FOUND AND NOT TARGET lmdb)
-  add_library(lmdb UNKNOWN IMPORTED)
+if(LMDB_FOUND
+   AND NOT
+       TARGET
+       lmdb
+)
+  add_library(
+    lmdb
+    UNKNOWN
+    IMPORTED
+  )
   set_target_properties(
     lmdb
     PROPERTIES

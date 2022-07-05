@@ -44,10 +44,18 @@ The following cache variables may also be set:
 find_package(PkgConfig QUIET)
 
 if(PkgConfig_FOUND)
-  pkg_check_modules(PC_Sodium QUIET "libsodium")
+  pkg_check_modules(
+    PC_Sodium
+    QUIET
+    "libsodium"
+  )
 
   if(NOT PC_Sodium_FOUND)
-    pkg_check_modules(PC_Sodium QUIET "sodium")
+    pkg_check_modules(
+      PC_Sodium
+      QUIET
+      "sodium"
+    )
   endif(NOT PC_Sodium_FOUND)
 endif()
 
@@ -78,8 +86,16 @@ if(UNOFFICIAL-SODIUM_FOUND)
   set(SODIUM_DEFINITIONS ${PC_Sodium_CFLAGS_OTHER})
 endif()
 
-if(UNOFFICIAL-SODIUM_FOUND AND NOT TARGET unofficial-sodium::sodium)
-  add_library(unofficial-sodium::sodium UNKNOWN IMPORTED)
+if(UNOFFICIAL-SODIUM_FOUND
+   AND NOT
+       TARGET
+       unofficial-sodium::sodium
+)
+  add_library(
+    unofficial-sodium::sodium
+    UNKNOWN
+    IMPORTED
+  )
   set_target_properties(
     unofficial-sodium::sodium
     PROPERTIES

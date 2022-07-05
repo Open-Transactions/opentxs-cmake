@@ -3,7 +3,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-function(print_build_details buildPedantic enableTests)
+function(
+  print_build_details
+  buildPedantic
+  enableTests
+)
   message(STATUS "General -------------------------------------")
   message(STATUS "Project name:             ${PROJECT_NAME}")
   message(STATUS "Project version:          ${${PROJECT_NAME}_VERSION_STRING}")

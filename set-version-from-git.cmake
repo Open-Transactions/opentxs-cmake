@@ -4,7 +4,11 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 macro(set_version_from_git)
-  find_program(GIT git NO_CMAKE_FIND_ROOT_PATH)
+  find_program(
+    GIT
+    git
+    NO_CMAKE_FIND_ROOT_PATH
+  )
 
   if(GIT-NOTFOUND)
     message(FATAL_ERROR "git not found.")
@@ -56,7 +60,8 @@ macro(set_version_from_git)
       ${PROJECT_NAME}_VERSION_SHA1
       "${${PROJECT_NAME}_GIT_VERSION}"
   )
-  if("${${PROJECT_NAME}_VERSION_NEW_COMMITS}" STREQUAL
+  if("${${PROJECT_NAME}_VERSION_NEW_COMMITS}"
+     STREQUAL
      "${${PROJECT_NAME}_GIT_VERSION}"
   )
     set(${PROJECT_NAME}_VERSION_STRING
@@ -69,7 +74,10 @@ macro(set_version_from_git)
         "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}-${${PROJECT_NAME}_VERSION_NEW_COMMITS}-${${PROJECT_NAME}_VERSION_SHA1}"
     )
   endif()
-  if("${${PROJECT_NAME}_VERSION_STRING}" STREQUAL "..")
+  if("${${PROJECT_NAME}_VERSION_STRING}"
+     STREQUAL
+     ".."
+  )
     message(FATAL_ERROR "Version string missing.")
   endif()
 endmacro()

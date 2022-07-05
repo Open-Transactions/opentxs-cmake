@@ -4,7 +4,11 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 macro(update_git_submodules)
-  find_program(GIT git NO_CMAKE_FIND_ROOT_PATH)
+  find_program(
+    GIT
+    git
+    NO_CMAKE_FIND_ROOT_PATH
+  )
 
   if(GIT-NOTFOUND)
     message(FATAL_ERROR "git not found.")

@@ -15,11 +15,13 @@ function(generate_pkgconfig linkString)
 
   configure_file(
     "${${PROJECT_NAME}_SOURCE_DIR}/cmake/project.pc.in"
-    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc.in" @ONLY
+    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc.in"
+    @ONLY
   )
   configure_file(
     "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc.in"
-    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc" @ONLY
+    "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}.pc"
+    @ONLY
   )
 
   install(

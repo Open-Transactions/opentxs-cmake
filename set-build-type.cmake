@@ -4,7 +4,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 macro(set_build_type)
-  if(CMAKE_BUILD_TYPE STREQUAL "")
+  if(CMAKE_BUILD_TYPE
+     STREQUAL
+     ""
+  )
     set(CMAKE_BUILD_TYPE
         Release
         CACHE
