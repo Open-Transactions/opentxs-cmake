@@ -3,20 +3,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 #
-# cmake_minimum_required
-#  3.0:  FindGit
-#  3.0:  FindGnuTLS
-#  3.1:  FindThreads
-#  3.1:  FindZLIB
-#  3.4:  FindOpenSSL
-#  3.5:  FindBoost
-#  3.5:  FindGTest
-#  3.8:  CXX_STANDARD 17 and cxx_std_17
-#  3.9:  FindProtobuf
-#  3.14: FindSQLite3
 
 include(GNUInstallDirs)
 include(define-job-pools)
+include(file-to-hex)
 include(find-system-libraries)
 include(generate-cmake-files)
 include(generate-pkgconfig)
