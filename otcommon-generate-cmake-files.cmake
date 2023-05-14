@@ -3,7 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-function(generate_cmake_files)
+function(otcommon_generate_cmake_files)
   include(CMakePackageConfigHelpers)
   set(CMAKE_CONFIG_DEST "${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}")
   set(${PROJECT_NAME}_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include")
@@ -23,7 +23,7 @@ function(generate_cmake_files)
   set(LIBRARIES_STRING "@PACKAGE_${PROJECT_NAME}_LIBRARIES@")
 
   configure_file(
-    "${${PROJECT_NAME}_SOURCE_DIR}/cmake/projectConfig.cmake.in"
+    "${${PROJECT_NAME}_SOURCE_DIR}/deps/opentxs-cmake/projectConfig.cmake.in"
     "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake.in"
     @ONLY
   )

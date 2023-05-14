@@ -4,7 +4,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 function(
-  print_build_details
+  otcommon_print_build_details
   buildPedantic
   enableTests
 )

@@ -3,9 +3,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-macro(generate_uninstall_target)
+macro(otcommon_generate_uninstall_target)
   configure_file(
-    "${${PROJECT_NAME}_SOURCE_DIR}/cmake/uninstall.cmake.in"
+    "${${PROJECT_NAME}_SOURCE_DIR}/deps/opentxs-cmake/uninstall.cmake.in"
     "${${PROJECT_NAME}_BINARY_DIR}/uninstall.cmake"
     IMMEDIATE
     @ONLY

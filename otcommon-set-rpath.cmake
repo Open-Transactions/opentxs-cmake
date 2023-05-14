@@ -3,7 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-macro(set_rpath)
+macro(otcommon_set_rpath)
   if(APPLE)
     set(basePoint @loader_path)
   else()

@@ -3,7 +3,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-macro(set_out_of_source_build)
+macro(otcommon_require_out_of_source_build)
   if(${CMAKE_CURRENT_SOURCE_DIR}
      STREQUAL
      ${CMAKE_CURRENT_BINARY_DIR}

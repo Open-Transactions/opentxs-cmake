@@ -4,7 +4,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 function(
-  file_to_hex
+  otcommon_file_to_hex
   FILE_NAME
   OUTPUT_VARIABLE
 )

@@ -3,13 +3,17 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-macro(hide_symbols macro_name)
-  set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-  set(CMAKE_VISIBILITY_INLINES_HIDDEN YES)
-
-  if(WIN32)
-    add_definitions("-D${macro_name}=__declspec(dllexport)")
-  else()
-    add_definitions("-D${macro_name}=__attribute__((visibility(\"default\")))")
+macro(otcommon_set_build_type)
+  if(CMAKE_BUILD_TYPE
+     STREQUAL
+     ""
+  )
+    set(CMAKE_BUILD_TYPE
+        Release
+        CACHE
+          STRING
+          "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+          FORCE
+    )
   endif()
 endmacro()
