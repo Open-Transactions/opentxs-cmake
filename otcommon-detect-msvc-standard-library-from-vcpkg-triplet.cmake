@@ -28,4 +28,13 @@ macro(otcommon_detect_msvc_standard_library_from_vcpkg_triplet)
   else()
     set(${PROJECT_NAME}_MSVC_RUNTIME_LIBRARY_SUFFIX "")
   endif()
+
+  if("${CMAKE_BUILD_TYPE}"
+     STREQUAL
+     "Debug"
+  )
+    set(${PROJECT_NAME}_MSVC_RUNTIME_LIBRARY_DEBUG "Debug")
+  else()
+    set(${PROJECT_NAME}_MSVC_RUNTIME_LIBRARY_DEBUG "")
+  endif()
 endmacro()

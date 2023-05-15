@@ -28,7 +28,7 @@ macro(
        ""
     )
       set(MSVC_RUNTIME_LIBRARY
-          "MultiThreaded$<$<CONFIG:Debug>:Debug>${${PROJECT_NAME}_MSVC_RUNTIME_LIBRARY_SUFFIX}"
+          "MultiThreaded${${PROJECT_NAME}_MSVC_RUNTIME_LIBRARY_DEBUG}${${PROJECT_NAME}_MSVC_RUNTIME_LIBRARY_SUFFIX}"
       )
       set(CMAKE_MSVC_RUNTIME_LIBRARY "${MSVC_RUNTIME_LIBRARY}")
     else()
@@ -97,6 +97,10 @@ macro(
       )
       set(CMAKE_EXE_LINKER_FLAGS
           "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib"
+      )
+    else()
+      message(
+        FATAL_ERROR "Invalid MSVC_RUNTIME_LIBRARY: ${MSVC_RUNTIME_LIBRARY}"
       )
     endif()
 
