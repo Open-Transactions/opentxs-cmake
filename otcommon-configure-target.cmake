@@ -24,6 +24,8 @@ function(otcommon_configure_target target_name)
     )
     target_compile_options(
       ${target_name}
+      PUBLIC
+        "/EHsc"
       PRIVATE
         "/W3"
         "/bigobj"
