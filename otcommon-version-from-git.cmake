@@ -4,22 +4,28 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 macro(otcommon_version_from_git)
-  find_program(
-    GIT
-    git
-    NO_CMAKE_FIND_ROOT_PATH
+  if(NOT
+     DEFINED
+     ${PROJECT_NAME}_GIT_VERSION
   )
+    find_program(
+      GIT
+      git
+      NO_CMAKE_FIND_ROOT_PATH
+    )
 
-  if(GIT-NOTFOUND)
-    message(FATAL_ERROR "git not found.")
+    if(GIT-NOTFOUND)
+      message(FATAL_ERROR "git not found.")
+    endif()
+
+    execute_process(
+      COMMAND ${GIT} "describe"
+      OUTPUT_VARIABLE ${PROJECT_NAME}_GIT_VERSION
+      WORKING_DIRECTORY ${${PROJECT_NAME}_SOURCE_DIR}
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
   endif()
 
-  execute_process(
-    COMMAND ${GIT} "describe"
-    OUTPUT_VARIABLE ${PROJECT_NAME}_GIT_VERSION
-    WORKING_DIRECTORY ${${PROJECT_NAME}_SOURCE_DIR}
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-  )
   string(
     REGEX
     REPLACE
