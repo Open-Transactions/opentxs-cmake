@@ -23,85 +23,16 @@ macro(
     include(otcommon-detect-msvc-standard-library-from-vcpkg-triplet)
     otcommon_detect_msvc_standard_library_from_vcpkg_triplet()
 
-    if("${CMAKE_MSVC_RUNTIME_LIBRARY}"
-       STREQUAL
-       ""
+    if(NOT
+       DEFINED
+       CMAKE_MSVC_RUNTIME_LIBRARY
     )
       set(MSVC_RUNTIME_LIBRARY
           "MultiThreaded${${PROJECT_NAME}_MSVC_RUNTIME_LIBRARY_DEBUG}${${PROJECT_NAME}_MSVC_RUNTIME_LIBRARY_SUFFIX}"
       )
       set(CMAKE_MSVC_RUNTIME_LIBRARY "${MSVC_RUNTIME_LIBRARY}")
     else()
-      set(MSVC_RUNTIME_LIBRARY "${CMAKE_MSVC_RUNTIME_LIBRARY}")
-    endif()
-
-    if("${MSVC_RUNTIME_LIBRARY}"
-       STREQUAL
-       "MultiThreaded"
-    )
-      if(NOT DEFINED)
-        set(OPENSSL_MSVC_STATIC_RT ON)
-      endif()
-
-      set(CMAKE_SHARED_LINKER_FLAGS
-          "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
-      )
-      set(CMAKE_STATIC_LINKER_FLAGS
-          "${CMAKE_STATIC_LINKER_FLAGS} /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
-      )
-      set(CMAKE_EXE_LINKER_FLAGS
-          "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
-      )
-    elseif(
-      "${MSVC_RUNTIME_LIBRARY}"
-      STREQUAL
-      "MultiThreadedDLL"
-    )
-      set(CMAKE_SHARED_LINKER_FLAGS
-          "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
-      )
-      set(CMAKE_STATIC_LINKER_FLAGS
-          "${CMAKE_STATIC_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
-      )
-      set(CMAKE_EXE_LINKER_FLAGS
-          "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib"
-      )
-    elseif(
-      "${MSVC_RUNTIME_LIBRARY}"
-      STREQUAL
-      "MultiThreadedDebug"
-    )
-      if(NOT DEFINED)
-        set(OPENSSL_MSVC_STATIC_RT ON)
-      endif()
-
-      set(CMAKE_SHARED_LINKER_FLAGS
-          "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcrtd.lib"
-      )
-      set(CMAKE_STATIC_LINKER_FLAGS
-          "${CMAKE_STATIC_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcrtd.lib"
-      )
-      set(CMAKE_EXE_LINKER_FLAGS
-          "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:msvcrtd.lib"
-      )
-    elseif(
-      "${MSVC_RUNTIME_LIBRARY}"
-      STREQUAL
-      "MultiThreadedDebugDLL"
-    )
-      set(CMAKE_SHARED_LINKER_FLAGS
-          "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib"
-      )
-      set(CMAKE_STATIC_LINKER_FLAGS
-          "${CMAKE_STATIC_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib"
-      )
-      set(CMAKE_EXE_LINKER_FLAGS
-          "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcmtd.lib"
-      )
-    else()
-      message(
-        FATAL_ERROR "Invalid MSVC_RUNTIME_LIBRARY: ${MSVC_RUNTIME_LIBRARY}"
-      )
+      set(MSVC_RUNTIME_LIBRARY ${CMAKE_MSVC_RUNTIME_LIBRARY})
     endif()
 
     set(${PROJECT_NAME}_MSVC_RUNTIME_LIBRARY "${MSVC_RUNTIME_LIBRARY}")
