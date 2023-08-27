@@ -27,7 +27,9 @@ function(otcommon_configure_target target_name)
       PUBLIC "/EHsc"
       PRIVATE
         "/W3"
+        "/Zc:char8_t-"
         "/bigobj"
+        "/utf-8"
         "/wd4068"
         "/wd4250"
     )
@@ -42,9 +44,9 @@ function(otcommon_configure_target target_name)
         "-W"
         "-Wall"
         "-Wextra"
-        "-pedantic"
         "-Wno-pragmas"
         "-Wno-unknown-pragmas"
+        "-pedantic"
     )
 
     if(${PROJECT_NAME}_PEDANTIC_COMPILER_FLAGS)
@@ -111,6 +113,10 @@ endfunction()
 
 function(otcommon_configure_cxx_target target_name)
   otcommon_configure_target(${target_name})
+
+  if(NOT MSVC)
+    target_compile_options(${target_name} PRIVATE "-fno-char8_t")
+  endif()
 
   if(${CMAKE_CXX_COMPILER_ID}
      MATCHES
