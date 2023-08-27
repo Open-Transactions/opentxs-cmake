@@ -13,6 +13,9 @@ function(otcommon_apply_defines target_name)
       ${target_name}
       PRIVATE
         NOMINMAX
+        STRICT
+        VC_EXTRALEAN
+        WIN32_EXTRA_LEAN
         WIN32_LEAN_AND_MEAN
         _UNICODE
         _WIN32_WINNT=0x0601
