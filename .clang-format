@@ -25,5 +25,5 @@ PenaltyReturnTypeOnItsOwnLine: 1000
 ReflowComments: true
 # SortIncludes does not handle subdirectories correctly
 SortIncludes: false
-Standard: Cpp11
+Standard: c++20
 ...
